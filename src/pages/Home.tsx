@@ -4,13 +4,6 @@ import { Link } from "react-router-dom";
 const stats = [
   { label: "Total Users", value: "10", icon: "◎", color: "#6366f1" },
   { label: "Total Posts", value: "50", icon: "▤", color: "#10b981" },
-  {
-    label: "API Source",
-    value: "JSONPlaceholder",
-    icon: "⬡",
-    color: "#f59e0b",
-  },
-  { label: "Status", value: "Live", icon: "◉", color: "#3b82f6" },
 ];
 
 const Home: React.FC = () => {
