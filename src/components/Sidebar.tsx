@@ -1,6 +1,5 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import './Sidebar.css';
 
 const Sidebar: React.FC = () => {
   return (
@@ -25,7 +24,7 @@ const Sidebar: React.FC = () => {
         </NavLink>
       </nav>
       <div className="sidebar-footer">
-        <div className="user-badge">
+        <div className="d-flex align-items-center gap-2 p-2">
           <div className="avatar">S</div>
           <div>
             <p className="u-name">Shristi</p>

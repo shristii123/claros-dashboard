@@ -1,5 +1,4 @@
 import React from 'react';
-import './DataTable.css';
 
 interface Column<T> {
   key: keyof T | string;
@@ -37,10 +36,11 @@ function DataTable<T extends { id: number }>({
   };
 
   return (
-    <div className="table-wrapper">
-      <div className="table-header">
-        <h2 className="table-title">{title}</h2>
-        <div className="table-controls">
+    <div className="card border shadow-sm">
+      {/* Header */}
+      <div className="card-header bg-white d-flex align-items-center justify-content-between flex-wrap gap-2 py-3">
+        <h5 className="mb-0 fw-bold" style={{ fontFamily: 'Syne, sans-serif' }}>{title}</h5>
+        <div className="d-flex align-items-center gap-2 flex-wrap">
           <div className="search-box">
             <span className="search-icon">⌕</span>
             <input
@@ -48,14 +48,16 @@ function DataTable<T extends { id: number }>({
               placeholder="Search..."
               value={searchTerm}
               onChange={(e) => onSearchChange(e.target.value)}
-              className="search-input"
+              className="form-control form-control-sm search-input"
+              style={{ width: 220, paddingLeft: 30 }}
             />
             {searchTerm && (
               <button className="clear-btn" onClick={() => onSearchChange('')}>✕</button>
             )}
           </div>
           <select
-            className="page-size-select"
+            className="form-select form-select-sm"
+            style={{ width: 110 }}
             value={pageSize}
             onChange={(e) => onPageSizeChange(Number(e.target.value))}
           >
@@ -66,32 +68,40 @@ function DataTable<T extends { id: number }>({
         </div>
       </div>
 
+      {/* Error */}
       {error && (
-        <div className="error-banner">
+        <div className="alert alert-danger d-flex align-items-center gap-2 m-3 py-2">
           <span>⚠</span> {error}
         </div>
       )}
 
+      {/* Loading */}
       {loading ? (
-        <div className="loading-state">
-          <div className="spinner" />
-          <p>Loading data...</p>
+        <div className="d-flex flex-column align-items-center justify-content-center py-5 text-muted gap-3">
+          <div className="spinner-border spinner-border-custom" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+          <p className="mb-0">Loading data...</p>
         </div>
       ) : (
         <>
-          <div className="table-scroll">
-            <table className="data-table">
-              <thead>
+          {/* Table */}
+          <div className="table-responsive">
+            <table className="table table-hover table-bordered mb-0">
+              <thead className="table-light">
                 <tr>
                   {columns.map((col) => (
-                    <th key={col.key as string}>{col.label}</th>
+                    <th key={col.key as string} className="text-uppercase fw-semibold text-muted"
+                        style={{ fontSize: '0.72rem', letterSpacing: '0.06em', whiteSpace: 'nowrap' }}>
+                      {col.label}
+                    </th>
                   ))}
                 </tr>
               </thead>
               <tbody>
                 {data.length === 0 ? (
                   <tr>
-                    <td colSpan={columns.length} className="empty-cell">
+                    <td colSpan={columns.length} className="text-center text-muted py-5">
                       No results found.
                     </td>
                   </tr>
@@ -99,7 +109,9 @@ function DataTable<T extends { id: number }>({
                   data.map((item) => (
                     <tr key={item.id}>
                       {columns.map((col) => (
-                        <td key={col.key as string}>{getCellValue(item, col)}</td>
+                        <td key={col.key as string} style={{ fontSize: '0.875rem', maxWidth: 200, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                          {getCellValue(item, col)}
+                        </td>
                       ))}
                     </tr>
                   ))
@@ -108,41 +120,24 @@ function DataTable<T extends { id: number }>({
             </table>
           </div>
 
-          <div className="pagination">
-            <span className="page-info">
+          {/* Pagination */}
+          <div className="card-footer bg-white d-flex align-items-center justify-content-between flex-wrap gap-2">
+            <span className="text-muted" style={{ fontSize: '0.8rem' }}>
               Showing {totalItems === 0 ? 0 : (currentPage - 1) * pageSize + 1}–
               {Math.min(currentPage * pageSize, totalItems)} of {totalItems}
             </span>
-            <div className="page-btns">
-              <button
-                onClick={() => onPageChange(1)}
-                disabled={currentPage === 1}
-                className="page-btn"
-              >«</button>
-              <button
-                onClick={() => onPageChange(currentPage - 1)}
-                disabled={currentPage === 1}
-                className="page-btn"
-              >‹</button>
+            <div className="d-flex gap-1">
+              <button onClick={() => onPageChange(1)} disabled={currentPage === 1} className="page-btn">«</button>
+              <button onClick={() => onPageChange(currentPage - 1)} disabled={currentPage === 1} className="page-btn">‹</button>
               {Array.from({ length: totalPages }, (_, i) => i + 1)
                 .filter((p) => Math.abs(p - currentPage) <= 2)
                 .map((p) => (
-                  <button
-                    key={p}
-                    onClick={() => onPageChange(p)}
-                    className={`page-btn ${p === currentPage ? 'active' : ''}`}
-                  >{p}</button>
+                  <button key={p} onClick={() => onPageChange(p)} className={`page-btn ${p === currentPage ? 'active' : ''}`}>
+                    {p}
+                  </button>
                 ))}
-              <button
-                onClick={() => onPageChange(currentPage + 1)}
-                disabled={currentPage === totalPages}
-                className="page-btn"
-              >›</button>
-              <button
-                onClick={() => onPageChange(totalPages)}
-                disabled={currentPage === totalPages}
-                className="page-btn"
-              >»</button>
+              <button onClick={() => onPageChange(currentPage + 1)} disabled={currentPage === totalPages} className="page-btn">›</button>
+              <button onClick={() => onPageChange(totalPages)} disabled={currentPage === totalPages} className="page-btn">»</button>
             </div>
           </div>
         </>
