@@ -13,20 +13,18 @@ A responsive dashboard built with **React**, **Redux Toolkit**, and **TypeScript
 - **Error handling** with user-friendly messages
 - **Redux Toolkit** for global state management
 - **TypeScript** throughout for type safety
-- **Unit tests** with Jest & React Testing Library
 
 ---
 
 ## Tech Stack
 
-| Layer | Tech |
-|---|---|
-| UI | React 18 + TypeScript |
-| State | Redux Toolkit + React-Redux |
+| Layer   | Tech |
+|---------|------|
+| UI      | React 18 + TypeScript |
+| State   | Redux Toolkit + React-Redux |
 | Routing | React Router v6 |
-| Styling | Pure CSS with CSS variables |
-| Testing | Jest + React Testing Library |
-| API | JSONPlaceholder (free public API) |
+| Styling | Bootstrap 5 + Custom CSS with CSS variables |
+| API     | JSONPlaceholder (free public API) |
 
 ---
 
@@ -69,9 +67,6 @@ npm test         # Run unit tests
 
 ```
 src/
-├── __tests__/
-│   ├── usersSlice.test.ts
-│   └── postsSlice.test.ts
 ├── components/
 │   ├── Sidebar.tsx
 │   ├── DataTable.tsx
@@ -87,25 +82,6 @@ src/
 │   └── postsSlice.ts
 ├── App.tsx
 └── index.tsx
-```
-
----
-
-## Deployment
-
-### Vercel (Recommended)
-
-```bash
-npm install -g vercel
-npm run build
-vercel --prod
-```
-
-### Netlify
-
-```bash
-npm run build
-# Drag and drop the /build folder to netlify.com/drop
 ```
 
 ---
