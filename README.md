@@ -58,7 +58,6 @@ The app will open at **http://localhost:3000**
 ```bash
 npm start        # Start development server
 npm run build    # Build for production
-npm test         # Run unit tests
 ```
 
 ---
